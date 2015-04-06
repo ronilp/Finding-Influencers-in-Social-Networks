@@ -1,0 +1,2 @@
+url = "https://graph.facebook.com"
+access_token = "CAACEdEose0cBAHOIDKWBPuVc6ZApZB1PGiB3HJR5Fxs7DjMA4iW4WdJb9LDpdZBjfPnGwewzEIZBnqqm4ZBMa9FovXZBp1aL7UCO3NjV4y9uTB5bwhA3Gqr1um5iQW7GttP7tXiQMym8Rzg77PeDUuXAqxVuLCvcCPShtVoC2rAvRtyOqMzjejYSCKZCWznKn3oy7KTw22CaOkyW8zeiNh8"
