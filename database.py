@@ -1,12 +1,8 @@
 from pymongo import MongoClient
 
 client = MongoClient()
-db = client.irassignment
+db = client.fbDatabase
 
 def getFriendsCollection():
 	collection = db.fbfriends
-	return collection
-
-def getLikesCollection():
-	collection = db.fblikes
 	return collection

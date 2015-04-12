@@ -1,7 +1,7 @@
 import requests
 from database import getFriendsCollection
 from utilities import url, access_token
-
+from fetchLikes import getLikes
 
 friendscollection =  getFriendsCollection()
 
@@ -23,11 +23,14 @@ def getFriends():
 
 
 def insertFriends(data):
-	#collection.insert_many(data)
-	global friendscollection
+	global friendscollection,count
 	for person in data:
-		friendscollection.insert(person)
-		print person['name'],  person['id']
+		count = count + 1
+		likes = getLikes(person,count,done)
+		personDetails = { person['name'] : likes }
+		friendscollection.insert(personDetails)
+		#print person['name'],  person['id']
 
-
+done = 0
+count = 0
 allFriends = getFriends()
