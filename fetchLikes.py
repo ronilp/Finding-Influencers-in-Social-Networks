@@ -23,4 +23,4 @@ def getLikes(person,count,done):
 	if len(all_likes) > 0:
 		done = done + 1
 		print '#' + str(done) , 'Fetched', str(len(all_likes)) + ' liked pages of ' + person['name']
-	return all_likes
+	return all_likes,done

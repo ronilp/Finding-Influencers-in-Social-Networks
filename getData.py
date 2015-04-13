@@ -3,7 +3,7 @@ from database import getFriendsCollection
 from utilities import url, access_token
 from fetchLikes import getLikes
 
-friendscollection =  getFriendsCollection()
+friendsCollection =  getFriendsCollection()
 
 def getFriends():
 	global url, access_token
@@ -23,14 +23,21 @@ def getFriends():
 
 
 def insertFriends(data):
-	global friendscollection,count
+	global friendsCollection,count,done
 	for person in data:
 		count = count + 1
-		likes = getLikes(person,count,done)
-		personDetails = { person['name'] : likes }
-		friendscollection.insert(personDetails)
-		#print person['name'],  person['id']
+		
+		if person['name'] not in friends:
+			likes,done = getLikes(person,count,done)
+			personDetails = { 'name' : person['name'], 'likes' : likes }
+			friendsCollection.insert(personDetails)
+			#print person['name'],  person['id']
+		
 
 done = 0
 count = 0
+friends = []
+for friend in friendsCollection.find():
+	friends.append(friend['name'])
 allFriends = getFriends()
+print 'Fetched likes of ' + str(count) + ' friends'
