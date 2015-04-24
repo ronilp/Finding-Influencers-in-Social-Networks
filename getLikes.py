@@ -12,7 +12,7 @@ friendsCollection = getFriendsCollection()
 
 for friend in friendsCollection.find():
 	idQueue.put(friend['id'])
-	
+
 
 class getLikes(threading.Thread):
 	def __init__(self):
@@ -21,12 +21,10 @@ class getLikes(threading.Thread):
 
 	def run(self):
 		while True:
-			global count, done
 			fbid = self.queue.get()
 			rurl = url + '/v2.3/' + fbid
 			response = requests.get(rurl,params ={'access_token': access_token, 'fields' : 'likes'})
-			count = count + 1
-			print "Fetching Likes for friend", " : ", friendsCollection.find_one({ 'id' : fbid})['name'], ' #' , count
+			print "This is for : ", fbid
 			all_likes = []
 			while True:
 				data = response.json()
@@ -41,18 +39,16 @@ class getLikes(threading.Thread):
 				all_likes.extend(likes)
 				response = requests.get(rurl)
 			if len(all_likes) > 0:
-				done = done + 1
-				print 'Fetched', str(len(all_likes)) + ' liked pages of ', friendsCollection.find_one({ 'id' : fbid})['name'], '#', done
-				likesCollection.insert({'id' : fbid, 'data' : all_likes})	
-                self.queue.task_done()
-        if idQueue.empty():
-            idQueue.task_done()
+				likesCollection.insert({'id' : fbid, 'data' : all_likes})
+			self.queue.task_done()
 
-done = 0
-count = 0
-for i in range(2):
+
+for i in range(20):
 	t = getLikes()
 	t.setDaemon(True)
 	t.start()
 
 idQueue.join()
+
+
+
