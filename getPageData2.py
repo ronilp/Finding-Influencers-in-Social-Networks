@@ -1,4 +1,4 @@
-from utilities import url, access_token
+from utilities import url, access_token, getAppendString
 from database import getPageCollection,getPageDataCollection
 from Queue import Queue
 import traceback
@@ -22,23 +22,6 @@ class fetchingPageData(threading.Thread):
 			return data[string]
 		return None
 
-	def getAppendString(self, document):
-		string = ''
-		for key in document:
-			if not document[key] or key == '_id' or key == 'were_here_count':
-				continue
-			elif key == 'posts':
-				for post in document[key]:
-					if not post:
-						continue
-					string += post.strip() +' '
-			else:
-				string += document[key].strip() + ' '
-		string = re.sub(r"(?:\@|https?\://)\S+",' ',string,flags=re.MULTILINE)
-		string = re.sub(r"[^\w]"," ", string,flags=re.MULTILINE)
-		string = {'_id' :document['_id'], 'data' : string}
-		return string
-
 	def run(self):
 		while True:
 			try:
@@ -59,7 +42,7 @@ class fetchingPageData(threading.Thread):
 						'posts' : [ self.getdata(msg,'message') for msg in data['posts']['data']]
 						}
 
-				string = self.getAppendString(document)
+				string = getAppendString(document)
 				a = self.collection.insert(string)
 			except:
 				self.queue.put(fbid)
@@ -87,6 +70,12 @@ def getPageData():
 		t.start()
 
 	queue.join()
+
+	for doc in pageDataCollection.find():
+		f = open('data/' + doc['_id'] + '.txt','w')
+		f.write(doc['data'])
+		f.close()
+
 
 start = time.time()
 

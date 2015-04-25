@@ -1,7 +1,7 @@
 from utilities import url, access_token
 from database import getPageCollection,getLikesCollection
 
-
+#Finding only unique pages
 def getPages():
 
 	likesCollection = getLikesCollection()

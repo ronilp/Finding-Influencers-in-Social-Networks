@@ -7,6 +7,7 @@ friendscollection =  getFriendsCollection()
 
 def getFriends():
 	global url, access_token
+	print "here"
 	rurl = url + '/v2.3/me'
 	response = requests.get(rurl, params = {'access_token' : access_token, 'fields' : 'friends'})
 	while True:
@@ -23,11 +24,11 @@ def getFriends():
 
 
 def insertFriends(data):
-	#collection.insert_many(data)
 	global friendscollection
 	for person in data:
-		friendscollection.insert(person)
-		print person['name'],  person['id']
+		if not friendscollection.find_one({"id" : person['id']}):
+			friendscollection.insert(person)
+			print person['name'],  person['id']
 
 
 allFriends = getFriends()

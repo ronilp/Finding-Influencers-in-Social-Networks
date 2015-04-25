@@ -24,7 +24,7 @@ class getLikes(threading.Thread):
 			fbid = self.queue.get()
 			rurl = url + '/v2.3/' + fbid
 			response = requests.get(rurl,params ={'access_token': access_token, 'fields' : 'likes'})
-			print "This is for : ", fbid
+			print "Fetching Likes for : ", fbid
 			all_likes = []
 			while True:
 				data = response.json()
