@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 client = MongoClient()
-db = client.fbdb
+db = client.Facebook
 
 def getFriendsCollection():
 	collection = db.fbfriends

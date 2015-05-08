@@ -23,7 +23,7 @@ def getFriends():
 
 
 def insertFriends(data):
-	global friendscollection
+	global friendscollection,count
 	for person in data:
 		if not friendscollection.find_one({"id" : person['id']}):
 			count = count + 1

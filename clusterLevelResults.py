@@ -29,12 +29,13 @@ def clusterLevelResults():
 					'$push' : {
 						'users' : {
 							'$each' : [doc],
-							'$sort' : {'score': -1} 
+							'$sort' : {'score': -1}, 
+							'$slice' : -1000
 							} 
 						}
 
 					} 
-				,upsert = False) 
+				,upsert = False)
 
 if __name__ == '__main__':
 	clusterLevelResults()

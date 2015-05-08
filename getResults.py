@@ -44,11 +44,16 @@ def kmeans(k, xs, l, n_iter=10):
             centers[j] = mean(members, l)
  
     return cluster
+
+def getdata(data,string):
+	if string in data:
+		return data[string]
+	return None
  
- 
-def fetchTestpage(fid):
+def fetchTestpage(fbid):
+    global url
     trurl = url + '/v2.3/'
-    rurl = trurl + fbid
+    rurl = str(trurl) + str(fbid)
     response = requests.get(rurl, params={'access_token': access_token, 'fields': 'about,category,bio,name,posts.limit(10){message}'})
     data = response.json()
     if 'posts' not in data:
@@ -56,15 +61,14 @@ def fetchTestpage(fid):
         data['posts']['data'] = []
     document = {
             '_id' : fbid,
-            'name' : self.getdata(data,'name'),
-            'about' : self.getdata(data,'about'),
-            'category' : self.getdata(data,'category'),
-            'bio' : self.getdata(data,'bio'),
-            'posts' : [ self.getdata(msg,'message') for msg in data['posts']['data']]
+            'name' : getdata(data,'name'),
+            'about' : getdata(data,'about'),
+            'category' : getdata(data,'category'),
+            'bio' : getdata(data,'bio'),
+            'posts' : [ getdata(msg,'message') for msg in data['posts']['data']]
             }
-
     string = getAppendString(document)
-    f = open('temp/' + string['_id'] + '.txt', 'w')
+    f = open('temp/' + str(string['_id']) + '.txt', 'w')
     f.write(string['data'])
     f.close()
 
@@ -94,7 +98,7 @@ if __name__ == '__main__':
     clusters = clusterCollection.distinct("cluster")
 
     fbdataCollection = getPageDataCollection()
-    for cluster in clusters:
+    for cluster in clusterCollection.find():
         pageIds = cluster['pages'][:len(cluster['pages'])/10]
         for p in pageIds:
             data = fbdataCollection.find_one({'_id' : p})
@@ -125,21 +129,30 @@ if __name__ == '__main__':
 
     # collection.drop()
     for j, c in enumerate(clusters):
-        # print("cluster %d:" % j)
+        #print("cluster %d:" % j)
         array = []
         for i in c:
-            # print("\t%s" % args[i])
+            #print("\t%s" % args[i])
             array.append(args[i])
-            if args[i] == fid:
+            if cleanName(args[i]) == PID:
                 cluster = j
                 break
         array = map(cleanName, array)
         doc = {'cluster' : j, 'pages' : array}
-    print "Cluster", cluster
+    # print "Cluster", cluster
     
     clusterCollection = getclusterLevelResultCollection()
     count = 0
-    print "Influencers for this cluster are"
+  
+    f = open('tempfile.txt','w')
+    f.write("Influencers for this cluster are\n")
 
+    ct = 0
     for influ in clusterCollection.find({'_id' : str(cluster)}):
-        print influ['name'], influ['id']
+        for each in influ['users']:
+        	ct += 1
+        	if ct <= 5:
+        		f.write(each['name'],each['id'],'\n')
+        	else:
+        		break
+    print 'done'

@@ -80,10 +80,8 @@ def getPageData():
 start = time.time()
 
 if __name__ == '__main__':
+	print "Working...."
 	getPageData()
 	end = time.time()
-	print end - start
-
-
-
-
+	#print end - start
+	print 'Done'

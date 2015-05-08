@@ -14,6 +14,7 @@ def getPages():
 			pageCollection.update(page, page, upsert=True)
 			counter += 1
 			print counter
+	print 'Total', counter, 'pages fetched'		
 
 if __name__ == '__main__':
 	getPages()

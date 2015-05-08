@@ -13,7 +13,7 @@ def getClusterContribution():
 			document['contribution'].append(len(scores['cluster'][cscore]))
 
 		document['contribution'] = [i*1.0/sum(document['contribution']) for i in document['contribution'] if sum(document['contribution']) > 0]
-		userClusterContributionCollection.insert(document)
+		print 'Calculated for', userClusterContributionCollection.insert(document)
 
 if __name__ == '__main__':
 	getClusterContribution()

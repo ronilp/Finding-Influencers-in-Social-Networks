@@ -23,27 +23,33 @@ def getPartialInfluenceScore():
 
 	dt = 7*24*60*60
 	scores = []
+	done = 0
 	for page in pagesCursor:
 		users = page['people']
-		users.sort(key = lambda x : x['created_time'])
-		cluster = page['cluster']
-		liketime = []
-		for user in users:
-			liketime.append((user['created_time'] - epoch).total_seconds())
+		try:
+			users.sort(key = lambda x : x['created_time'])
+			cluster = page['cluster']
+			liketime = []
+			for user in users:
+				liketime.append((user['created_time'] - epoch).total_seconds())
 
-		back = 0
-		print users
-		for user in users:
-			userId = user['id']
-			timeahead = (user['created_time'] - epoch).total_seconds() + dt
-			timeback = (user['created_time'] - epoch).total_seconds() - dt
-			ahead = bisect.bisect_right(liketime, timeahead)
-			score = ahead - back
-			back += 1
-			print userId, cluster, score
-			clusterInfluencerCollection.update({ '_id' : userId}, { '$push' : {'cluster.' +str(cluster) : score} }, upsert = False)
+			back = 0
+			done += 1
+			print done
+			for user in users:
+				userId = user['id']
+				timeahead = (user['created_time'] - epoch).total_seconds() + dt
+				timeback = (user['created_time'] - epoch).total_seconds() - dt
+				ahead = bisect.bisect_right(liketime, timeahead)
+				score = ahead - back
+				back += 1
+				#print userId, cluster, score
+				clusterInfluencerCollection.update({ '_id' : userId}, { '$push' : {'cluster.' +str(cluster) : score} }, upsert = False)
+		except:
+			print "hmmm"
 
 
 
 if __name__ == '__main__':
 	getPartialInfluenceScore()
+	print 'done'

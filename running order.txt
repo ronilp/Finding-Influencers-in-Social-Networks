@@ -4,3 +4,8 @@ run getPages
 run pageData2
 run kmeans
 run pageAnalytics
+run getPartitalInfluencerScore
+run clusterContribution
+run getFullInfluenceScore
+run clusterLevelResults
+run getResults
