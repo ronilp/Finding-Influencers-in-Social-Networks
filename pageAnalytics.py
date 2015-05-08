@@ -8,6 +8,7 @@ fbpagesinfo = getPagesClusterInfoCollection()
 clusterinfo = getClusterCollection()
 
 fbpagesinfo.drop()
+counter = 0
 for pageId in allpages.find():
 	cursor = alllikes.find({'data' : { '$elemMatch' : {'id' : pageId['_id']} } })
 	cluster = clusterinfo.find_one({'pages' : pageId['_id']})
@@ -22,6 +23,7 @@ for pageId in allpages.find():
 						dd['created_time'] = dateparser.parse(pages['created_time'])
 						break
 		document['people'].append(dd)
-	print document
+	counter += 1
+	print 'document', counter, 'done'
 	fbpagesinfo.insert(document)
 	

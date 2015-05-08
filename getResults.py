@@ -4,6 +4,7 @@ import random
 from database import getclusterLevelResultCollection,getClusterCollection, getPageDataCollection
 import requests
 from utilities import url, access_token, getAppendString, KVAL, PID, MAXOUT
+
 def densify(x, n):
     d = [0] * n
     for i, v in x:

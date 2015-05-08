@@ -1,7 +1,7 @@
 from collections import defaultdict
 from math import sqrt
 import random
-from utilties import kval
+from utilities import KVAL
 from database import getClusterCollection
  
 def densify(x, n):
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         sys.exit(1)
  
     try:
-        k = kval
+        k = KVAL
     except ValueError():
         usage()
  
@@ -82,7 +82,7 @@ if __name__ == '__main__':
         return string[7:-4]
 
     collection = getClusterCollection()
-    # collection.drop()
+    collection.drop()
     for j, c in enumerate(clusters):
         print("cluster %d:" % j)
         array = []
@@ -91,4 +91,4 @@ if __name__ == '__main__':
             array.append(args[i])
         array = map(cleanName, array)
         doc = {'cluster' : j, 'pages' : array}
-        # collection.insert(doc)
+        collection.insert(doc)

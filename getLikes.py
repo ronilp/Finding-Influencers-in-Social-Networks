@@ -24,7 +24,7 @@ class getLikes(threading.Thread):
 			fbid = self.queue.get()
 			rurl = url + '/v2.3/' + fbid
 			response = requests.get(rurl,params ={'access_token': access_token, 'fields' : 'likes'})
-			print "Fetching Likes for : ", fbid
+			print "Fetching Likes for : ", friendsCollection.find_one({ 'id' : fbid})['name']
 			all_likes = []
 			while True:
 				data = response.json()
@@ -39,6 +39,7 @@ class getLikes(threading.Thread):
 				all_likes.extend(likes)
 				response = requests.get(rurl)
 			if len(all_likes) > 0:
+				print 'Fetched', str(len(all_likes)) + ' liked pages of ', friendsCollection.find_one({ 'id' : fbid})['name']
 				likesCollection.insert({'id' : fbid, 'data' : all_likes})
 			self.queue.task_done()
 
@@ -49,6 +50,3 @@ for i in range(20):
 	t.start()
 
 idQueue.join()
-
-
-

@@ -1,0 +1,6 @@
+run getData
+run getLikes
+run getPages
+run pageData2
+run kmeans
+run pageAnalytics

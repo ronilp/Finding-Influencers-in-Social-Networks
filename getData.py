@@ -6,8 +6,7 @@ from utilities import url, access_token
 friendscollection =  getFriendsCollection()
 
 def getFriends():
-	global url, access_token
-	print "here"
+	global url, access_token,count
 	rurl = url + '/v2.3/me'
 	response = requests.get(rurl, params = {'access_token' : access_token, 'fields' : 'friends'})
 	while True:
@@ -27,8 +26,11 @@ def insertFriends(data):
 	global friendscollection
 	for person in data:
 		if not friendscollection.find_one({"id" : person['id']}):
+			count = count + 1
 			friendscollection.insert(person)
 			print person['name'],  person['id']
 
 
+count = 0
 allFriends = getFriends()
+print 'Fetched ' + str(count) + ' friends' 

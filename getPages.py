@@ -6,13 +6,14 @@ def getPages():
 
 	likesCollection = getLikesCollection()
 	pageCollection = getPageCollection()
-
+	counter = 0
 	for likes in likesCollection.find():
 		likes = likes['data']
 		for like in likes:
 			page = {'_id' : like['id']}
-			print pageCollection.update(page, page, upsert=True)
-
+			pageCollection.update(page, page, upsert=True)
+			counter += 1
+			print counter
 
 if __name__ == '__main__':
 	getPages()

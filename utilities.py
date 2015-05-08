@@ -1,8 +1,10 @@
 import re
 url = "https://graph.facebook.com"
-access_token = "CAACEdEose0cBAKPdtwsyUXZBaIknGoBZBUQvdLgZC75Pert3K1ZCpJkTa7Az7bB8QdcRKszZBdkcruytEqdRI7uCHZAJv5GhsLn79Fr6sZB99LzILvQBHlvJThJRV9NofJJvQilkh1bA0UeccQEVLYmZBz00XK6bUXx2wNlB6VYOdwKZBUL3ZAj3uFTWhZCLXfv9F1Pw8ZAqBc1c5dbAbsyraLMm"
-kval =
-tid = 
+access_token = "CAACEdEose0cBAKBNJBJv2LfSD0JjWEinAwzDtyHpU9HA7YOxPAMKL6VJkfTZBFU0nAtLRfpTZAeRHtOhPFs4h9GZBGMc6GZAiBzdBuCKa33c7bB748Jn8Rtm1Ji4rBa5ZAXuAKydgKzRF1crZA44HSdeUKXKZAWeZBgXGmangCP9UtX4ZBtZBtQ7fLLnclESOJZCB1ZB9t8RpSnPThqJpkOizRoGAz0IhOvQEI8ZD"
+KVAL = 7
+PID = "1573397092904626"
+MAXOUT = 3
+
 def getAppendString(document):
 		string = ''
 		for key in document:

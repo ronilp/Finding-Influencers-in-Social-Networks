@@ -31,7 +31,5 @@ def getFullInfluenceScore():
 			print friend['name'], score
 
 
-
-
 if __name__ == '__main__':
 	getFullInfluenceScore()

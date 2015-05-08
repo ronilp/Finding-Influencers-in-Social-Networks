@@ -1,1 +1,0 @@
-actor director 100 chakravyuh

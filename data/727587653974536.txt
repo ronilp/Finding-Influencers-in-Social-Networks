@@ -1,1 +1,0 @@
-actor director yami gautam 3 3 3 cute 3
